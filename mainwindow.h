@@ -21,6 +21,8 @@ private slots:
     void on_pushButtonLink_clicked();
 
     void on_pushButtonSend_clicked();
+    void on_radioButton_clicked();
+
 public:
     void setMsg(QString msg);
 

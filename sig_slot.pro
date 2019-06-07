@@ -29,12 +29,16 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     tester.cpp \
-    net_tool.cpp
+    net_tool.cpp \
+    chatpackage.cpp \
+    crc.cpp
 
 HEADERS += \
         mainwindow.h \
     tester.h \
-    net_tool.h
+    net_tool.h \
+    chatpackage.h \
+    crc.h
 
 FORMS += \
         mainwindow.ui

@@ -57,3 +57,14 @@ void MainWindow::setMsg(QString msg){
     }
     ui->textEditRecord->append(msg);
 }
+
+void MainWindow::on_radioButton_clicked()
+{
+    if(client_){
+        if(client_->getProtocal()==Client::ECHO){
+            client_->setProtocal(Client::CHAT);
+        }else{
+            client_->setProtocal(Client::ECHO);
+        }
+    }
+}

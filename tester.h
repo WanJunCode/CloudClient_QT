@@ -22,6 +22,7 @@ private:
     } __attribute__((packed)) echo_message_t;
 
 public:
+    enum PROTOCAL {ECHO ,CHAT};
     Client(std::string ip,int port,MainWindow *win);
     ~Client();
     bool connectServer(std::string ip,int port);
@@ -30,6 +31,12 @@ public:
     void disConnect();
     bool status(){
         return isConnected;
+    }
+    void setProtocal(PROTOCAL pro){
+        protocal = pro;
+    }
+    PROTOCAL getProtocal(){
+        return protocal;
     }
 private:
     static void *receiveTrd(void *args);
@@ -41,6 +48,7 @@ private:
     bool isConnected;
     NET::remote_client client_;
     pthread_t receiveThread;
+    PROTOCAL protocal;
 
 signals:
     void msgSig(QString str);
