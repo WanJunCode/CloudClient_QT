@@ -51,6 +51,9 @@ void MainWindow::on_pushButtonSend_clicked()
 }
 
 void MainWindow::setMsg(QString msg){
+    if(client_->status()==false){
+        ui->labelStatus->setText("连接失败");
+        ui->pushButtonLink->setText("连接");
+    }
     ui->textEditRecord->append(msg);
-//    ui->textEditRecord->insertPlainText(msg);
 }

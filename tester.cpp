@@ -24,6 +24,7 @@ bool Client::connectServer(std::string ip,int port){
     }
     client_ = NET::Connect(ip.data(),port);
     if(client_.clientfd != 0){
+//        创建接受线程
         if(0 != pthread_create(&receiveThread,NULL,receiveTrd,this)){
             qDebug()<<"fail to create receive thread"<<endl;
             return false;
@@ -53,11 +54,19 @@ void Client::disConnect(){
     }
 }
 
-void Client::recv(){
+bool Client::recv(){
     char buffer[MAXLINE];
     bzero(buffer,sizeof(buffer));
     int length = read(client_.clientfd,buffer,sizeof(buffer));
-    emit msgSig(QString::fromStdString(std::string(buffer,length)));
+    if(length == 0){
+        qDebug()<<"read length is zero";
+        isConnected = false;
+        emit msgSig(QString::fromStdString(std::string("")));
+        return false;
+    }else{
+        emit msgSig(QString::fromStdString(std::string(buffer,length)));
+        return true;
+    }
 }
 
 void clean_up(void *args){
@@ -69,7 +78,9 @@ void *Client::receiveTrd(void *args){
     pthread_cleanup_push(clean_up,NULL);
     Client *client =(Client *)args;
     while (true) {
-        client->recv();
+        if(client->recv() == false){
+            break;
+        }
     }
     pthread_cleanup_pop(1);
 }

@@ -26,7 +26,7 @@ public:
     ~Client();
     bool connectServer(std::string ip,int port);
     size_t send(std::string message);
-    void recv();
+    bool recv();
     void disConnect();
     bool status(){
         return isConnected;
